@@ -1,11 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Res, UploadedFile, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
-import { SignupUserDto } from '../../auth/dto/create_user-dto';
-import { LoginUserDto } from '../../auth/dto/login_user_dto';
 import { BaseResponse } from 'src/base_response';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
-import { diskStorage } from 'multer';
 import { UpdateUserDto } from './dto/update_user_dto';
 import { AccessTokenGuard } from 'src/common/accessToken.guard';
 
