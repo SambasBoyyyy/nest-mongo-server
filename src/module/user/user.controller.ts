@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { BaseResponse } from 'src/base_response';
 import { Response } from 'express';
 import { UpdateUserDto } from './dto/update_user_dto';
-import { AccessTokenGuard } from 'src/common/accessToken.guard';
+import { AccessTokenGuard } from 'src/common/guards/accessToken.guard';
 
 @Controller('user')
 export class UserController {
