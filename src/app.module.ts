@@ -12,7 +12,6 @@ import { CoursesModule } from './module/courses/courses.module';
   imports: [
     MongooseModule.forRoot('mongodb://0.0.0.0:27017/mydatabase', {
       dbName: "mydatabase",
-      
     }),
     ConfigModule.forRoot({
       isGlobal: true,
