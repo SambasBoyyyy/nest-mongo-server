@@ -7,6 +7,8 @@ import { SignInResponse, UpdateRefreshDto } from 'src/auth/dto/auth.dto';
 import {  UpdateUserDto, UpdateUserResponse } from './dto/update_user_dto';
 import { SignupUserDto } from 'src/auth/dto/create_user-dto';
 import { LoginUserDto } from 'src/auth/dto/login_user_dto';
+import { UserChooseCourse } from './dto/ChooseCourse_dto';
+import { json } from 'stream/consumers';
 
 @Injectable()
 export class UserService {
@@ -147,5 +149,30 @@ export class UserService {
  
     return this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true });
   }
+
+  async addCourses(userId: string, ChooseCourse: UserChooseCourse): Promise<any> {
+    // Find the user by userId
+    const user = await this.userModel.findOne({ userId });
+  
+    // If user not found, throw an error or handle as required
+    if (!user) {
+      // handle user not found
+      throw new Error('User not found');
+    }
+  
+    // Ensure uniqueness of courseIds
+    const uniqueCourseIds = ChooseCourse.courseIds.filter(courseId => !user.courseID.includes(courseId));
+  
+    if (uniqueCourseIds.length > 0) {
+      // Add unique courseIds to user's courseID array
+      user.courseID.push(...uniqueCourseIds);
+  
+      // Save the updated user document
+      await user.save();
+      return { message: "Courses added successfully" };
+    } else {
+      return { message: "User has already taken this course" };
+    }
+}
 
 }

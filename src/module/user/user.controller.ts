@@ -4,6 +4,8 @@ import { BaseResponse } from 'src/base_response';
 import { Response } from 'express';
 import { UpdateUserDto } from './dto/update_user_dto';
 import { AccessTokenGuard } from 'src/common/guards/accessToken.guard';
+import { UserChooseCourse } from './dto/ChooseCourse_dto';
+
 
 @Controller('user')
 export class UserController {
@@ -24,8 +26,15 @@ export class UserController {
   //   }
 
 
-  
+  @UseGuards(AccessTokenGuard)
+  @Post(':userId/add-courses')
+  async addCoursesToUser(@Param('userId') userId: string,@Body() ChooseCourse: UserChooseCourse, // Expecting an array of course IDs in the request body
+  ) {
+    return await this.userService.addCourses(userId, ChooseCourse);
+  }
 
+  
+  @UseGuards(AccessTokenGuard)
   @Post('update/:id')
   async updateUser(@Body() UpdateUserDto: UpdateUserDto,@Param() params) {
     UpdateUserDto.id = params.id;
@@ -37,6 +46,7 @@ export class UserController {
     return response;
   }
 
+  @UseGuards(AccessTokenGuard)
   @Delete('delete/:id')
   async delete_user(@Param() params) {
   

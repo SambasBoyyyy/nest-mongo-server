@@ -47,6 +47,13 @@ export class User {
   @Prop({ required: true })
   password: string;
   
+  @Prop({
+    type: [{ type: String}],
+    default: [],
+    unique: true,
+  })
+  courseID: string[]; 
+
   @Prop()
   refreshToken: string;
 }
