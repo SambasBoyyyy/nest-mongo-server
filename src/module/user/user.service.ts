@@ -8,7 +8,7 @@ import {  UpdateUserDto, UpdateUserResponse } from './dto/update_user_dto';
 import { SignupUserDto } from 'src/auth/dto/create_user-dto';
 import { LoginUserDto } from 'src/auth/dto/login_user_dto';
 import { UserChooseCourse } from './dto/ChooseCourse_dto';
-import { json } from 'stream/consumers';
+import { UserRemoveCourse } from './dto/remove_course_dto';
 
 @Injectable()
 export class UserService {
@@ -173,6 +173,31 @@ export class UserService {
     } else {
       return { message: "User has already taken this course" };
     }
+}
+
+async deleteCourses(userId: string, RemoveCourse: UserRemoveCourse): Promise<any> {
+  // Find the user by userId
+  const user = await this.userModel.findOne({ userId });
+
+  // If user not found, throw an error or handle as required
+  if (!user) {
+    // handle user not found
+    throw new Error('User not found');
+  }
+
+  // Remove the courseIdsToDelete from user's courseID array
+  // user.courseID = RemoveCourse.courseIds.filter(courseId => !user.courseID.includes(courseId));
+
+  // // Save the updated user document
+  // await user.save();
+
+  // Delete the specified courses from the database
+  await this.userModel.updateOne(
+    { _id: user._id },
+    { $pull: { courseID: { $in: RemoveCourse.courseIds } } }
+  );
+  
+  return { message: "Courses deleted successfully" };
 }
 
 }

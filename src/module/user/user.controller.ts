@@ -5,6 +5,7 @@ import { Response } from 'express';
 import { UpdateUserDto } from './dto/update_user_dto';
 import { AccessTokenGuard } from 'src/common/guards/accessToken.guard';
 import { UserChooseCourse } from './dto/ChooseCourse_dto';
+import { UserRemoveCourse } from './dto/remove_course_dto';
 
 
 @Controller('user')
@@ -31,6 +32,13 @@ export class UserController {
   async addCoursesToUser(@Param('userId') userId: string,@Body() ChooseCourse: UserChooseCourse, // Expecting an array of course IDs in the request body
   ) {
     return await this.userService.addCourses(userId, ChooseCourse);
+  }
+
+  @UseGuards(AccessTokenGuard)
+  @Delete(':userId/remove-courses')
+  async deleteCourses(@Param('userId') userId: string,@Body() RemoveCourse: UserRemoveCourse, // Expecting an array of course IDs in the request body
+  ) {
+    return await this.userService.deleteCourses(userId, RemoveCourse);
   }
 
   
@@ -69,6 +77,7 @@ export class UserController {
   }
   return res.sendFile(user.img_url, { root: 'uploads/images' });
 }
+
 }
 export { UploadedFile };
 
