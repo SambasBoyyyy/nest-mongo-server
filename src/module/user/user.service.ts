@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { User, UserDocument } from './entities/user.entity';
+import { User, UserDocument, UserSchema } from './entities/user.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { BaseResponse } from 'src/base_response';
@@ -147,7 +147,7 @@ export class UserService {
   }
   async update( id: string,updateUserDto: UpdateRefreshDto): Promise<UserDocument> {
  
-    return this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true });
+    return this.userModel.findOneAndUpdate({userId:id}, updateUserDto, { new: true });
   }
 
   async addCourses(userId: string, ChooseCourse: UserChooseCourse): Promise<any> {

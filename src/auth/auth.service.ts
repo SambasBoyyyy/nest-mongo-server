@@ -28,8 +28,9 @@ export class AuthService {
           ...createUserDto,
           password: hash,
         });
-        const tokens = await this.getTokens(newUser._id, newUser.email);
-      await this.updateRefreshToken(newUser._id, tokens.refreshToken);
+        console.log(newUser.userId)
+        const tokens = await this.getTokens(newUser.userId, newUser.email);
+      await this.updateRefreshToken(newUser.userId, tokens.refreshToken);
         return tokens;
       }
     
@@ -40,8 +41,8 @@ export class AuthService {
         const passwordMatches = await argon2.verify(user.password, data.password);
         if (!passwordMatches)
           throw new BadRequestException('Password is incorrect');
-        const tokens = await this.getTokens(user._id, user.email);
-        await this.updateRefreshToken(user._id, tokens.refreshToken);
+        const tokens = await this.getTokens(user.userId, user.email);
+        await this.updateRefreshToken(user.userId, tokens.refreshToken);
         return tokens;
       }
     

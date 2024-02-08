@@ -1,7 +1,9 @@
 import { PartialType } from "@nestjs/mapped-types";
 import { SignupUserDto } from "./create_user-dto";
 
-export class UpdateRefreshDto extends PartialType(SignupUserDto) {}
+export class UpdateRefreshDto extends PartialType(SignupUserDto) {
+  
+}
 export type TokenModel = {
     access_token: string;
     refresh_token: string;

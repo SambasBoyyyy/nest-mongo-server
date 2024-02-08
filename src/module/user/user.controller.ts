@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Res, UploadedFile, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Req, Res, UploadedFile, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { BaseResponse } from 'src/base_response';
 import { Response } from 'express';
@@ -6,6 +6,8 @@ import { UpdateUserDto } from './dto/update_user_dto';
 import { AccessTokenGuard } from 'src/common/guards/accessToken.guard';
 import { UserChooseCourse } from './dto/ChooseCourse_dto';
 import { UserRemoveCourse } from './dto/remove_course_dto';
+import { UserId } from './decoretor/user.decoretor';
+import { TokenMiddleware } from 'src/middleware/token';
 
 
 @Controller('user')
@@ -55,11 +57,11 @@ export class UserController {
   }
 
   @UseGuards(AccessTokenGuard)
-  @Delete('delete/:id')
-  async delete_user(@Param() params) {
-  
+  @Delete('delete')
+  async delete_user(@Req() req: Request) {
+    const userId = req['userId'];
     const response: BaseResponse = {
-      data: await this.userService.DeleteById(params.id),
+      data: await this.userService.DeleteById(userId),
       message: 'success',
       status: 201,
     };
