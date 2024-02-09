@@ -10,15 +10,15 @@ export class TokenMiddleware implements NestMiddleware {
     const authHeader = req.headers.authorization;
      console.log(authHeader)
     if (authHeader && authHeader.startsWith('Bearer ')) {
-      const token = authHeader.substring(7); // Remove 'Bearer ' from the token
+      const token = authHeader.substring(7); 
       try {
         const decodedToken = this.jwtService.decode(token);
         console.log(decodedToken)
-        // Extract userID from the decoded token and attach it to the request object
+        
         req['userId'] = decodedToken.sub;
-        console.log(req['userId']) // Assuming 'sub' holds userID
+        console.log(req['userId']) 
       } catch (error) {
-        // Token is invalid or expired
+    
         console.error('Invalid token:', error.message);
       }
     }
