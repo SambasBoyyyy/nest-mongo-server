@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 import { Client } from 'src/module/clients/entities/client.entity';
 import { Double } from 'mongodb';
 
-export type UserDocument = Course & Document;
+export type CourseDocument = Course & Document;
 
 @Schema({
   toJSON: {
