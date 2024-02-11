@@ -6,6 +6,7 @@ import { CourseDto } from './dto/coursedto';
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
   
+  
   @Post('add-coursesByadmin')
   async addCoursesToUser(@Body() AddCourse: CourseDto) {
     return await this.coursesService.addCourse(AddCourse);

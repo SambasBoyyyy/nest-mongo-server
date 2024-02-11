@@ -8,4 +8,5 @@ export type CourseDto={
     course_img_url?: string;
     description?: string;
     duration: string;
+    price:number
 }

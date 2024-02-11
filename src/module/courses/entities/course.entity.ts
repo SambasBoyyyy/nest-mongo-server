@@ -41,6 +41,8 @@ export class Course {
 
   @Prop()
   duration: string;
+  @Prop()
+  price: number;
 }
 
 export const CourseSchema = SchemaFactory.createForClass(Course);
