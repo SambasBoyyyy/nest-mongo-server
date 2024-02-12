@@ -53,6 +53,15 @@ export class UserService {
       throw new NotFoundException('User not found');
     }
   }
+  async enrolledCourse(userId: string): Promise<any>{
+    try {
+       const user= await this.userModel.findOne({ userId: userId});
+       return {courseId:user.courseID};
+    
+    } catch (error) {
+      throw new NotFoundException('User has not enrolled yet');
+    }
+  }
 
   async DeleteById(userId: string){
     try {

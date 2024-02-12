@@ -59,8 +59,9 @@ export class UserController {
   }
 
   @Get('enrolled-courses')
-  async addCoursesToUser(@Body() AddCourse: CourseDto) {
-    return await this.coursesService.addCourse(AddCourse);
+  async enrolledCoursesofUser(@Req() req: Request) {
+    const userId = req['userId'];
+    return await this.userService.enrolledCourse(userId);
   }
 
 }
