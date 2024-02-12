@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { CourseDto } from './dto/coursedto';
 

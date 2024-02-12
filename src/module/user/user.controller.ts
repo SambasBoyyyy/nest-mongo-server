@@ -57,4 +57,10 @@ export class UserController {
     }
     return res.sendFile(user.img_url, { root: 'uploads/images' });
   }
+
+  @Get('enrolled-courses')
+  async addCoursesToUser(@Body() AddCourse: CourseDto) {
+    return await this.coursesService.addCourse(AddCourse);
+  }
+
 }
