@@ -1,7 +1,9 @@
-import { WebSocketGateway, SubscribeMessage, MessageBody } from '@nestjs/websockets';
+import { WebSocketGateway, SubscribeMessage, MessageBody, WebSocketServer, ConnectedSocket } from '@nestjs/websockets';
 import { ChatsService } from './chats.service';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
+import { Server, Socket } from "socket.io"
+
 
 @WebSocketGateway({
   cors: {
@@ -10,11 +12,16 @@ import { UpdateChatDto } from './dto/update-chat.dto';
   },
 })
 export class ChatsGateway {
+
+  @WebSocketServer()
+  server:Server
   constructor(private readonly chatsService: ChatsService) {}
 
   @SubscribeMessage('createChat')
   create(@MessageBody() createChatDto: CreateChatDto) {
-    return this.chatsService.create(createChatDto);
+    const chat= this.chatsService.create(createChatDto);
+    this.server.emit('createChat', chat);
+    return chat;
   }
 
   @SubscribeMessage('findAllChats')
@@ -23,12 +30,13 @@ export class ChatsGateway {
   }
 
   @SubscribeMessage('joinChat')
-  joinChat() {
-    
+  joinChat(@MessageBody('name') name: string,@ConnectedSocket() client:Socket) {
+    return this.chatsService.identify(name,client.id);
   }
 
   @SubscribeMessage('typing')
-  async typing() {
-    
+  async typing(@MessageBody('isTyping') isTyping:boolean,@ConnectedSocket() client:Socket) {
+    const name = this.chatsService.getclientName(client.id);
+    client.broadcast.emit('typing', {name,isTyping});
   }
 }

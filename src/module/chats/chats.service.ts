@@ -7,6 +7,17 @@ export class ChatsService {
 
 chats: Chat[]= [{name:"Sam",text:"GG"}]
 
+clientToUser={};
+
+identify(name:string,clientId:string){
+this.clientToUser[clientId] = name;
+return  Object.values(this.clientToUser);
+}
+
+getclientName(clientId:string){
+  return this.clientToUser[clientId];
+}
+
   create(createChatDto: CreateChatDto) {
     const chat = {...createChatDto}
      this.chats.push(createChatDto);
