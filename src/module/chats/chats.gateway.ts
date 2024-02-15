@@ -3,7 +3,12 @@ import { ChatsService } from './chats.service';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
 
-@WebSocketGateway()
+@WebSocketGateway({
+  cors: {
+    origin: '*',
+    // credentials: true,
+  },
+})
 export class ChatsGateway {
   constructor(private readonly chatsService: ChatsService) {}
 
@@ -17,18 +22,13 @@ export class ChatsGateway {
     return this.chatsService.findAll();
   }
 
-  @SubscribeMessage('findOneChat')
-  findOne(@MessageBody() id: number) {
-    return this.chatsService.findOne(id);
+  @SubscribeMessage('joinChat')
+  joinChat() {
+    
   }
 
-  @SubscribeMessage('updateChat')
-  update(@MessageBody() updateChatDto: UpdateChatDto) {
-    return this.chatsService.update(updateChatDto.id, updateChatDto);
-  }
-
-  @SubscribeMessage('removeChat')
-  remove(@MessageBody() id: number) {
-    return this.chatsService.remove(id);
+  @SubscribeMessage('typing')
+  async typing() {
+    
   }
 }
