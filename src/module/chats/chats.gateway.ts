@@ -18,8 +18,8 @@ export class ChatsGateway {
   constructor(private readonly chatsService: ChatsService) {}
 
   @SubscribeMessage('createChat')
-  create(@MessageBody() createChatDto: CreateChatDto) {
-    const chat= this.chatsService.create(createChatDto);
+  create(@MessageBody() createChatDto: CreateChatDto,@ConnectedSocket() client:Socket) {
+    const chat= this.chatsService.create(createChatDto,client.id);
     this.server.emit('createChat', chat);
     return chat;
   }

@@ -18,8 +18,12 @@ getclientName(clientId:string){
   return this.clientToUser[clientId];
 }
 
-  create(createChatDto: CreateChatDto) {
-    const chat = {...createChatDto}
+  create(createChatDto: CreateChatDto,clientId:string) {
+    // const chat = {...createChatDto}
+    const chat = {
+      name: this.clientToUser[clientId],
+      text: createChatDto.text
+    }
      this.chats.push(createChatDto);
      return chat
   }
