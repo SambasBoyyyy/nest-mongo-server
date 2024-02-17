@@ -11,4 +11,9 @@ export class CoursesController {
   async addCoursesToUser(@Body() AddCourse: CourseDto) {
     return await this.coursesService.addCourse(AddCourse);
   }
+
+  @Get('all-courses')
+  async AllCourses() {
+    return await this.coursesService.AllCourse();
+  }
 }

@@ -10,12 +10,17 @@ export class CoursesService {
     constructor(@InjectModel(Course.name) private readonly courseModel: Model<CourseDocument>) {}
     
     async addCourse(courseDto: CourseDto): Promise<any> {
-      
-       
+   
       const res = this.courseModel.create(courseDto);
          return res;
       }
     
+      async AllCourse(): Promise<Course[]> {
+      
+       
+         const res = this.courseModel.find().exec();
+            return res;
+         }
         
     
 
