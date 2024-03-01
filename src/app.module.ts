@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { CoursesModule } from './module/courses/courses.module';
 import { ChatsModule } from './module/chats/chats.module';
+import { DetectionModule } from './module/detection/detection.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { ChatsModule } from './module/chats/chats.module';
     ClientModule,
     AuthModule,
     CoursesModule,
-    ChatsModule, 
+    ChatsModule,
+    DetectionModule, 
   ],
   controllers: [AppController],
   providers: [AppService],
